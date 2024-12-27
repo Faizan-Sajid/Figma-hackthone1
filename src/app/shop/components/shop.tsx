@@ -1,9 +1,13 @@
 import Image from "next/image";
+
 import pic from "../../../../public/43eebd52ea72d60650f31030ec4bf7e6.png";
 import pic2 from "../../../../public/4bdba3a6bef9d68df2d9a06e32e96c61.png";
 import pic3 from "../../../../public/9765b31b26fb533b95b7b43e636201e6.png";
 import pic4 from "../../../../public/a11f805aade2224f1d6658764a2395df.jpeg";
 import pic5 from "../../../../public/4bdba3a6bef9d68df2d9a06e32e96c61.png";
+import shopcover from "../../../../public/shopcover.jpeg"
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 const data = [
   { image: pic, productName: "Syltherine", detail: "Stylish cafe chair", price: "Rp 12.000" },
@@ -22,6 +26,32 @@ const data = [
 
 function Shop() {
   return (
+    <>
+
+
+    <div className="relative h-[300px] w-full">
+          <Image
+            src={shopcover}
+            alt="Shop Cover"
+            fill
+            quality={100}
+            priority
+            className="object-cover blur-sm"
+          />
+          <div className="absolute inset-0 " />
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
+              Shop
+            </h1>
+            <div className="flex items-center gap-2 text-[#000000] text-base">
+              <Link href="/" className="hover:text-[#B88E2F] transition-colors">
+                Home
+              </Link>
+              <ChevronRight className="w-4 h-4" />
+              <span>Shop</span>
+            </div>
+          </div>
+        </div>
     <div className="bg-[#f9f9f9] py-12">
       <div className="container mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.map((product, index) => (
@@ -52,6 +82,7 @@ function Shop() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

@@ -99,7 +99,11 @@ const Header = () => {
                 <Heart size={22} />
               </button>
               <button className="hover:text-yellow-600">
-                <ShoppingCart size={22} />
+              
+              <ShoppingCart size={22} />
+                
+              
+                
               </button>
             </li>
           </ul>

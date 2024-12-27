@@ -4,6 +4,7 @@ import Footer from "./components/footer";
 import Hero from "./components/herosection";
 import Livingarea from "./components/livingroom";
 import Product from "./components/product";
+import RoomInspiration from "./components/rooms";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
     <Hero/>
     <Livingarea/>
     <Product/>
+    <RoomInspiration/>
     <Footer/>
     </>
   );
