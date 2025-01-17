@@ -1,5 +1,5 @@
 // import Image from "next/image";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 // import Header from "./components/header";
 import Hero from "./components/herosection";
 import Livingarea from "./components/livingroom";
@@ -14,7 +14,7 @@ export default function Home() {
     <Livingarea/>
     <Product/>
     <RoomInspiration/>
-    <Footer/>
+  
     </>
   );
 }
