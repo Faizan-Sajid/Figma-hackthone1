@@ -5,6 +5,15 @@ import { client } from "@/sanity/lib/client"; // Adjust path based on your proje
 import picPlaceholder from "../../../public/4bdba3a6bef9d68df2d9a06e32e96c61.png"; // Fallback image
 import Link from "next/link";
 
+interface ProductInterface {
+  _id: number
+  title: string,
+  productImageUrl: string,
+  price: string, 
+  detail:string
+  isNew: boolean
+}
+
 const query = `
   *[_type == "product"][0...6] {
     title,
@@ -37,7 +46,7 @@ function Product() {
         Explore Our Products
       </h1>
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-10">
-        {products.map((product:any, index) => (
+        {products.map((product:ProductInterface, index) => (
           <div
             key={index}
             className="bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105"

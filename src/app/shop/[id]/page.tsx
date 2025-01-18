@@ -14,29 +14,46 @@ type ProductProps = {
   isNew: boolean;
 };
 
-const ProductDetail = ({ params }: { params: { id: string } }) => {
+const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   const [product, setProduct] = useState<ProductProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false); // State to toggle description
+  const [error, setError] = useState<string | null>(null);
 
-  const { id } = params;
+  // Use React.use() to unwrap the params promise
+  const { id } = React.use(params);
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) {
+      console.log("Waiting for ID...");
+      return; // Don't run fetch if ID is not available
+    }
 
     const fetchProduct = async () => {
-      const query = `*[_type == "product" && _id == $id][0]{
-        _id,
-        title,
-        "productImageUrl": productImage.asset->url,
-        description,
-        price,
-        discountPercentage,
-        isNew
-      }`;
-      const data = await client.fetch(query, { id });
-      setProduct(data);
-      setLoading(false);
+      setLoading(true);
+      try {
+        const query = `*[_type == "product" && _id == $id][0]{
+          _id,
+          title,
+          "productImageUrl": productImage.asset->url,
+          description,
+          price,
+          discountPercentage,
+          isNew
+        }`;
+
+        const data = await client.fetch(query, { id });
+        if (data) {
+          setProduct(data);
+        } else {
+          setError("Product not found.");
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setError("Failed to fetch product data.");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProduct();
@@ -44,6 +61,10 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
 
   if (loading) {
     return <div className="text-center text-lg text-gray-600">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-lg text-red-600">{error}</div>;
   }
 
   if (!product) {
@@ -62,7 +83,7 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
     <div className="container mx-auto py-16 px-6 md:px-12 bg-gray-50">
       <div className="flex flex-col lg:flex-row gap-12 items-center">
         {/* Product Image Section */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full lg:w-1/2 relative">
           <Image
             src={product.productImageUrl}
             alt={product.title}

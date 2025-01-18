@@ -6,6 +6,16 @@ import { ChevronRight } from "lucide-react";
 import { client } from "@/sanity/lib/client"; // Adjust the path based on your project structure
 import shopcover from "../../../../public/shopcover.jpeg";
 
+
+interface ProductInterface {
+  _id: number
+  title: string,
+  productImageUrl: string,
+  price: number, 
+  dicountPercentage:number
+  isNew: boolean
+}
+
 const query = `
   *[_type == "product"] {
     _id,
@@ -21,10 +31,10 @@ function Shop() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    client.fetch(query).then((data: any) => setProducts(data));
+    client.fetch(query).then((data) => setProducts(data));
   }, []);
 
-  const handleAddToCart = async (product: any) => {
+  const handleAddToCart = async (product:ProductInterface) => {
     try {
       // Simulate adding product to a cart using async/await
       const response = await fetch("/api/cart/add", {
@@ -75,7 +85,7 @@ function Shop() {
       {/* Products Section */}
       <div className="bg-[#f9f9f9] py-12">
         <div className="container mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product: any, index) => {
+          {products.map((product:ProductInterface, index) => {
             const discountedPrice =
               product.dicountPercentage > 0
                 ? product.price - (product.price * product.dicountPercentage) / 100
