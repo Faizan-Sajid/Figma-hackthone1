@@ -5,15 +5,16 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { client } from "@/sanity/lib/client"; // Adjust the path based on your project structure
 import shopcover from "../../../../public/shopcover.jpeg";
-
+import { useDispatch } from "react-redux";
+import { add } from "@/app/redux/features/cartslice";
 
 interface ProductInterface {
-  _id: number
-  title: string,
-  productImageUrl: string,
-  price: number, 
-  dicountPercentage:number
-  isNew: boolean
+  _id: number;
+  title: string;
+  productImageUrl: string;
+  price: number;
+  dicountPercentage: number;
+  isNew: boolean;
 }
 
 const query = `
@@ -28,33 +29,25 @@ const query = `
 `;
 
 function Shop() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    // Fetch products from Sanity
     client.fetch(query).then((data) => setProducts(data));
   }, []);
 
-  const handleAddToCart = async (product:ProductInterface) => {
-    try {
-      // Simulate adding product to a cart using async/await
-      const response = await fetch("/api/cart/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId: product._id, quantity: 1 }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add to cart");
-      }
-
-      // Optionally, show a success message or update cart state
-      alert("Product added to cart!");
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      alert("Failed to add product to cart");
-    }
+  const handleAddToCart = (product: ProductInterface) => {
+    const cartItem = {
+      _id: product._id.toString(), // Ensure _id is a string
+      title: product.title, // Rename 'name' to 'title'
+      productImageUrl: product.productImageUrl, // Add missing property
+      price: product.price,
+      discountPercentage: product.dicountPercentage, // Add missing property
+      isNew: product.isNew, // Add missing property
+      quantity: 1,
+    };
+    dispatch(add(cartItem));
   };
 
   return (
@@ -71,7 +64,9 @@ function Shop() {
         />
         <div className="absolute inset-0" />
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">Shop</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            Shop
+          </h1>
           <div className="flex items-center gap-2 text-[#000000] text-base">
             <Link href="/" className="hover:text-[#B88E2F] transition-colors">
               Home
@@ -84,11 +79,12 @@ function Shop() {
 
       {/* Products Section */}
       <div className="bg-[#f9f9f9] py-12">
-        <div className="container mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product:ProductInterface, index) => {
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product: ProductInterface, index) => {
             const discountedPrice =
               product.dicountPercentage > 0
-                ? product.price - (product.price * product.dicountPercentage) / 100
+                ? product.price -
+                  (product.price * product.dicountPercentage) / 100
                 : null;
 
             return (
@@ -96,35 +92,30 @@ function Shop() {
                 key={index}
                 className="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg"
               >
-                
                 {/* Product Image */}
                 <div className="relative w-full h-60">
                   {/* Link to dynamic product detail page */}
                   <Link href={`/shop/${product._id}`}>
-                  
-                  <Image
-                    src={product.productImageUrl}
-                    alt={product.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="object-cover"
-                  />
-                  
-                  {/* New Badge */}
-                  {product.isNew && (
-                    <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
-                      New
-                    </span>
-                  )}
+                    <Image
+                      src={product.productImageUrl}
+                      alt={product.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="object-cover"
+                    />
+                    {/* New Badge */}
+                    {product.isNew && (
+                      <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
+                        New
+                      </span>
+                    )}
                   </Link>
                 </div>
 
                 {/* Product Details */}
                 <div className="p-4">
                   <h3 className="text-base font-semibold text-[#111111]">
-                    
-                      {product.title}
-                    
+                    {product.title}
                   </h3>
                   <div className="mt-2 flex items-center gap-2">
                     {discountedPrice ? (

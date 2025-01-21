@@ -6,12 +6,12 @@ import picPlaceholder from "../../../public/4bdba3a6bef9d68df2d9a06e32e96c61.png
 import Link from "next/link";
 
 interface ProductInterface {
-  _id: number
-  title: string,
-  productImageUrl: string,
-  price: string, 
-  detail:string
-  isNew: boolean
+  _id: number;
+  title: string;
+  productImageUrl: string;
+  price: string;
+  detail: string;
+  isNew: boolean;
 }
 
 const query = `
@@ -46,7 +46,7 @@ function Product() {
         Explore Our Products
       </h1>
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-10">
-        {products.map((product:ProductInterface, index) => (
+        {products.map((product: ProductInterface, index) => (
           <div
             key={index}
             className="bg-white shadow-md rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105"
@@ -54,13 +54,13 @@ function Product() {
             {/* Product Image */}
             <div className="relative w-full h-[250px]">
               <Link href={"/shop"}>
-              <Image
-                src={product.productImageUrl || picPlaceholder}
-                alt={product.title || "Product Image"}
-                layout="fill"
-                objectFit="cover"
-                className="object-cover"
-              />
+                <Image
+                  src={product.productImageUrl || picPlaceholder}
+                  alt={product.title || "Product Image"}
+                  layout="fill"
+                  objectFit="cover"
+                  className="object-cover"
+                />
               </Link>
               {/* New Badge */}
               {product.isNew && (

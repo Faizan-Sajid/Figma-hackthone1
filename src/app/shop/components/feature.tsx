@@ -27,10 +27,10 @@ const Features = () => {
         {/* Free Shipping */}
         <div className="flex flex-col items-center space-y-3 text-center">
           <Truck className="text-[#d3ad7f] w-12 h-12" />
-          <h3 className="text-lg font-semibold text-[#111111]">Free Shipping</h3>
-          <p className="text-sm text-[#666666] leading-5">
-            Order over 150 $
-          </p>
+          <h3 className="text-lg font-semibold text-[#111111]">
+            Free Shipping
+          </h3>
+          <p className="text-sm text-[#666666] leading-5">Order over 150 $</p>
         </div>
 
         {/* 24/7 Support */}
@@ -39,9 +39,7 @@ const Features = () => {
           <h3 className="text-lg font-semibold text-[#111111]">
             24 / 7 Support
           </h3>
-          <p className="text-sm text-[#666666] leading-5">
-            Dedicated support
-          </p>
+          <p className="text-sm text-[#666666] leading-5">Dedicated support</p>
         </div>
       </div>
     </div>

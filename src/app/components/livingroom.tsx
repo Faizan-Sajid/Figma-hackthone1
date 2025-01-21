@@ -32,7 +32,7 @@ function Livingarea() {
             alt="Living Room"
             className="w-full h-[400px] object-cover transition-transform duration-300 hover:scale-105"
           />
-           <h2 className="text-[22px] mt-3 font-bold text-center">Living</h2>
+          <h2 className="text-[22px] mt-3 font-bold text-center">Living</h2>
         </div>
         <div className="overflow-hidden rounded-lg shadow-md">
           <Image
@@ -40,7 +40,7 @@ function Livingarea() {
             alt="Bedroom"
             className="w-full h-[400px] object-cover transition-transform duration-300 hover:scale-105"
           />
-           <h2 className="text-[22px] mt-3 font-bold text-center">Bedroom</h2>
+          <h2 className="text-[22px] mt-3 font-bold text-center">Bedroom</h2>
         </div>
       </div>
     </section>

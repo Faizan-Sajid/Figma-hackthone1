@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
@@ -68,7 +67,11 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   if (!product) {
-    return <div className="text-center text-lg text-gray-600">Product not found.</div>;
+    return (
+      <div className="text-center text-lg text-gray-600">
+        Product not found.
+      </div>
+    );
   }
 
   const discountedPrice =
@@ -100,7 +103,9 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
 
         {/* Product Details Section */}
         <div className="w-full lg:w-1/2">
-          <h1 className="text-5xl font-bold text-gray-800 mb-6">{product.title}</h1>
+          <h1 className="text-5xl font-bold text-gray-800 mb-6">
+            {product.title}
+          </h1>
 
           {/* Description with Read More */}
           <p className="text-lg text-gray-600 mb-4">
@@ -118,7 +123,10 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           {/* Price Section */}
           <div className="flex items-baseline gap-4 mb-6">
             <span className="text-4xl font-extrabold text-[#B88E2F]">
-              Rp {discountedPrice ? discountedPrice.toLocaleString() : product.price.toLocaleString()}
+              Rp{" "}
+              {discountedPrice
+                ? discountedPrice.toLocaleString()
+                : product.price.toLocaleString()}
             </span>
             {discountedPrice && (
               <span className="text-lg text-gray-400 line-through">

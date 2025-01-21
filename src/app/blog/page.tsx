@@ -1,15 +1,12 @@
+import BlogPage from "./components/blogdata";
 
-import BlogPage from "./components/blogdata"
-
-function Blogpagedata (){
-return (
-  <>
-  <div>
-    <BlogPage/>
-    
-  </div>
-  </>
-
-)
+function Blogpagedata() {
+  return (
+    <>
+      <div>
+        <BlogPage />
+      </div>
+    </>
+  );
 }
-export default Blogpagedata
+export default Blogpagedata;

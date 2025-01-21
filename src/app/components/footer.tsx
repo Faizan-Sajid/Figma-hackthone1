@@ -12,7 +12,8 @@ const Footer = () => {
           <div>
             <h2 className="text-2xl font-bold text-black mb-6">Funiro.</h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              400 University Drive Suite 200<br />
+              400 University Drive Suite 200
+              <br />
               Coral Gables, FL 33134 USA
             </p>
           </div>

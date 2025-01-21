@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import { ChevronRight } from 'lucide-react'
-import pic from "../../../public/room.png"
-import pic1 from "../../../public/room1.png"
+import Image from "next/image";
+import { ChevronRight } from "lucide-react";
+import pic from "../../../public/room.png";
+import pic1 from "../../../public/room1.png";
 
 export default function RoomInspiration() {
   return (
@@ -14,7 +14,8 @@ export default function RoomInspiration() {
               50+ Beautiful rooms inspiration
             </h1>
             <p className="mt-4 font-poppins text-lg text-gray-600">
-              Our designer already made a lot of beautiful prototipe of rooms that inspire you
+              Our designer already made a lot of beautiful prototipe of rooms
+              that inspire you
             </p>
             <button className="mt-8 w-fit bg-[#B8884B] px-8 py-3 font-poppins text-white transition-colors hover:bg-[#A67A43]">
               Explore More
@@ -79,5 +80,5 @@ export default function RoomInspiration() {
         </div>
       </div>
     </section>
-  )
+  );
 }
