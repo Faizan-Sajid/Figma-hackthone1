@@ -2,22 +2,36 @@
 import React, { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
+import { add } from "@/app/redux/features/cartslice";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 
-type ProductProps = {
-  _id: string;
+// type ProductProps = {
+//   _id: string;
+//   title: string;
+//   productImageUrl: string;
+//   description: string;
+//   price: number;
+//   dicountPercentage: number;
+//   isNew: boolean;
+// };
+
+interface ProductInterface {
+  _id: number;
   title: string;
   productImageUrl: string;
   description: string;
   price: number;
-  discountPercentage: number;
+  dicountPercentage: number;
   isNew: boolean;
-};
+}
 
 const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
-  const [product, setProduct] = useState<ProductProps | null>(null);
+  const [product, setProduct] = useState<ProductInterface | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false); // State to toggle description
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   // Use React.use() to unwrap the params promise
   const { id } = React.use(params);
@@ -58,6 +72,19 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = (product: ProductInterface) => {
+    const cartItem = {
+      _id: product._id.toString(), // Ensure _id is a string
+      title: product.title, // Rename 'name' to 'title'
+      productImageUrl: product.productImageUrl, // Add missing property
+      price: product.price,
+      discountPercentage: product.dicountPercentage, // Add missing property
+      isNew: product.isNew, // Add missing property
+      quantity: 1,
+    };
+    dispatch(add(cartItem));
+  };
+
   if (loading) {
     return <div className="text-center text-lg text-gray-600">Loading...</div>;
   }
@@ -75,8 +102,8 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   const discountedPrice =
-    product.discountPercentage > 0
-      ? product.price - (product.price * product.discountPercentage) / 100
+    product.dicountPercentage > 0
+      ? product.price - (product.price * product.dicountPercentage) / 100
       : null;
 
   // Truncate the description to a specified length
@@ -136,20 +163,25 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           {/* Discount Text */}
-          {product.discountPercentage > 0 && (
+          {product.dicountPercentage > 0 && (
             <p className="text-md text-green-600 font-semibold mb-8">
-              You save {product.discountPercentage}%!
+              You save {product.dicountPercentage}%!
             </p>
           )}
 
           {/* Buttons */}
           <div className="flex gap-6">
-            <button className="py-3 px-10 bg-[#B88E2F] text-white text-lg font-bold rounded-lg shadow-md hover:bg-[#916c23] transition-transform transform hover:scale-105">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="py-3 px-10 bg-[#B88E2F] text-white text-lg font-bold rounded-lg shadow-md hover:bg-[#916c23] transition-transform transform hover:scale-105"
+            >
               Add to Cart
             </button>
+            <Link href={"/cart"}>
             <button className="py-3 px-10 bg-gray-200 text-lg font-bold rounded-lg shadow-md hover:bg-gray-300 transition-transform transform hover:scale-105">
               Buy Now
             </button>
+            </Link>
           </div>
         </div>
       </div>
