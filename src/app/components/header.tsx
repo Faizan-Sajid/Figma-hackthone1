@@ -11,6 +11,7 @@ import { useAppSelector } from "../redux/hooks";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const item = useAppSelector((state) => state.cart); // Assuming `state.cart` contains cart items.
+  const wishlist = useAppSelector((state) => state.wishlist)
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -49,9 +50,14 @@ const Header = () => {
           <button className="hover:text-yellow-600">
             <Search size={22} />
           </button>
-          <button className="hover:text-yellow-600">
+          <Link href={"/wishlist"}>
+          <button className="relative flex items-center justify-center p-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white">
             <Heart size={22} />
+            <span className="absolute top-0 right-0 w-5 h-5 bg-red-600 text-white text-xs flex items-center justify-center rounded-full">
+                {wishlist.length}
+              </span>
           </button>
+          </Link>
 
           {/* Cart Button with Item Count */}
           <Link href="/cart">
@@ -116,9 +122,11 @@ const Header = () => {
               <button className="hover:text-yellow-600">
                 <Search size={22} />
               </button>
+              <Link href="/wishlist">
               <button className="hover:text-yellow-600">
                 <Heart size={22} />
               </button>
+              </Link>
               <Link href="/cart">
                 <button className="relative flex items-center justify-center p-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white">
                   <ShoppingCart size={22} />
@@ -127,6 +135,7 @@ const Header = () => {
                   </span>
                 </button>
               </Link>
+
             </li>
           </ul>
         </nav>
