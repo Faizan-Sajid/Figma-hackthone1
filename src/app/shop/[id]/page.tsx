@@ -6,6 +6,7 @@ import { add } from "@/app/redux/features/cartslice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 
+
 // type ProductProps = {
 //   _id: string;
 //   title: string;
@@ -186,7 +187,9 @@ const ProductDetail = ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </div>
     </div>
-  );
+    
+);
+  
 };
 
 export default ProductDetail;

@@ -11,7 +11,7 @@ interface CartItem {
 // Define the state type as an array of CartItems
 type CartState = CartItem[];
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const CartSlice = createSlice({
   name: "Cart",
@@ -19,8 +19,12 @@ export const CartSlice = createSlice({
   initialState: [] as CartState, // Initial state is an empty array of CartItems
   reducers: {
     // The 'add' action expects the payload to be of type CartItem
-    add(state, action: { payload: CartItem }) {
-      state.push(action.payload); // Add the item to the state
+    add(state, action: PayloadAction<CartItem>) {
+      // Check if the product already exists in the wishlist
+      const existingProduct = state.find(item => item._id === action.payload._id);
+      if (!existingProduct) {
+        state.push(action.payload); // Add the product if it's not already in the wishlist
+      }
     },
     // The 'remove' action expects the payload to be a string (the item's id)
     remove(state, action: { payload: string }) {
